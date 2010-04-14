@@ -14,13 +14,7 @@ class knpValidatorLocaleAwareNumber extends sfValidatorNumber
   *
   * Available options:
   *
-  *  * max: The maximum value allowed
-  *  * min: The minimum value allowed
-  *
-  * Available error codes:
-  *
-  *  * max
-  *  * min
+  *  * format: The symfony object which defines how numeric values are formatted and displayed.
   *
   * @param array $options   An array of options
   * @param array $messages  An array of error messages
@@ -29,13 +23,9 @@ class knpValidatorLocaleAwareNumber extends sfValidatorNumber
   */
   protected function configure($options = array(), $messages = array())
   {
-    $this->addMessage('max', '"%value%" must be at most %max%.');
-    $this->addMessage('min', '"%value%" must be at least %min%.');
+    parent::configure();
+    $this->addOption('format', sfNumberFormatInfo::getInstance());
 
-    $this->addOption('min');
-    $this->addOption('max');
-
-    $this->setMessage('invalid', '"%value%" is not a number.');
   }
 
   /**
@@ -55,8 +45,8 @@ class knpValidatorLocaleAwareNumber extends sfValidatorNumber
 
   public function convertToEnglishNumber($value)
   {
-    $localeInfo = localeconv(); 
-    $value = str_replace($localeInfo['mon_decimal_point'] , '.', $value); 
+    $format = $this->getOption('format');
+    $value = str_replace($format->getDecimalSeparator() , '.', $value); 
     return $value;
   }
 }

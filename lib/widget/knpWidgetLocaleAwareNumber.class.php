@@ -1,27 +1,32 @@
 <?php
 
-/*
- * This file is part of the symfony package.
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 /**
  * sfWidgetFormInput represents an HTML text input tag.
  *
- * @package    symfony
+ * @package    knpLocaleAwareNumber
  * @subpackage widget
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormInputText.class.php 20941 2009-08-08 14:11:51Z Kris.Wallsmith $
+ * @author     Matthieu Bontemps <matthieu@knpLabs.com>
  */
 class knpWidgetLocaleAwareNumber extends sfWidgetFormInputText
 {
-  public function convertToLocaleNumber($value)
+  
+  /**
+   * @param array $options     An array of options
+   * @param array $attributes  An array of default HTML attributes
+   *
+   * @see sfWidgetForm
+   */
+  protected function configure($options = array(), $attributes = array())
   {
-    $localeInfo = localeconv(); 
-    $value = str_replace('.', $localeInfo['mon_decimal_point'], $value); 
+    parent::configure($options, $attributes);
+
+    $this->addOption('format', sfNumberFormatInfo::getInstance());
+  }
+  
+  protected function convertToLocaleNumber($value)
+  {
+    $format = $this->getOption('format');
+    $value = str_replace('.', $format->getDecimalSeparator(), $value); 
     return $value;
   }
   

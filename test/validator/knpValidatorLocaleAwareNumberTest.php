@@ -1,27 +1,22 @@
 <?php
 
-/*
- * This file is part of the symfony package.
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 require_once dirname(__FILE__).'/../bootstrap.php';
 require_once dirname(__FILE__).'/../../lib/validator/knpValidatorLocaleAwareNumber.class.php';
 
 $t = new lime_test(13);
 $v = new knpValidatorLocaleAwareNumber();
 
+$nbDot = clone sfNumberFormatInfo::getInstance();
+$nbDot->setDecimalSeparator('.');
+$nbComma = clone sfNumberFormatInfo::getInstance();
+$nbComma->setDecimalSeparator(',');
 
 // ->clean()
 $t->diag('->clean()');
 
-setlocale(LC_ALL, 'en_US');
 $t->is($v->clean("12.3"), 12.3, '->clean() with en_US returns the numbers unmodified');
 
-setlocale(LC_ALL, 'fr_FR');
+$v->setOption('format', $nbComma);
 $t->is($v->clean("12,3"), 12.3, '->clean() with fr_FR converts the strings to numbers');
 $t->is($v->clean("12.3"), 12.3, '->clean() converts the strings to numbers − always works with english numbers');
 
@@ -36,7 +31,7 @@ catch (sfValidatorError $e)
   $t->pass('->clean() throws a sfValidatorError if the value is not a number');
 }
 
-setlocale(LC_ALL, 'en_US');
+$v->setOption('format', $nbDot);
 try
 {
   $v->clean('12,3');
@@ -47,7 +42,7 @@ catch (sfValidatorError $e)
   $t->pass('->clean() throws a sfValidatorError if the value is not a number');
 }
 
-setlocale(LC_ALL, 'fr_FR');
+$v->setOption('format', $nbComma);
 
 $v->setOption('required', false);
 $t->ok($v->clean(null) === null, '->clean() returns null for null values');
