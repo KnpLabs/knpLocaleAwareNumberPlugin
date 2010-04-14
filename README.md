@@ -1,15 +1,16 @@
-# knpValidatorLocaleAwareNumber
+# knpLocaleAwareNumber
 
-## Usage
+knpLocaleAwareNumber is a symfony 1.4 package which deals with locale aware numbers (ie 2,6 in french // 2.6 in english).
+It aims to provide both a validator and a widget.
 
-    $validator = new knpValidatorLocaleAwareNumber(array('locale' => 'fr_FR'));
+## knpValidatorLocaleAwareNumber
+
+### Usage
+
+    setlocale(LC_ALL, 'fr_FR');
+    $validator = new knpValidatorLocaleAwareNumber();
     echo $validator->clean("2,5"); // 2.5
     
-## Options
+## knpWidgetLocaleAwareNumber
 
-Available options:
-
-* min: The minimum value allowed
-* max: The maximum value allowed
-* locale: The locale to use to validate the input. Will use the current locale by default.
-
+TODO
