@@ -13,4 +13,7 @@ It aims to provide both a validator and a widget.
     
 ## knpWidgetLocaleAwareNumber
 
-TODO
+## Usage
+
+    $widget->render('knpLabs', '9.3') 
+    // <input type="text" name="knpLabs" value="9,3" id="knpLabs" />
