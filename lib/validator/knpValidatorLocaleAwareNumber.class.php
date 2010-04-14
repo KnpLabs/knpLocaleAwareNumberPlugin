@@ -23,9 +23,9 @@ class knpValidatorLocaleAwareNumber extends sfValidatorNumber
   */
   protected function configure($options = array(), $messages = array())
   {
-    parent::configure();
-    $this->addOption('format', sfNumberFormatInfo::getInstance());
+    $this->addRequiredOption('format');
 
+    parent::configure();
   }
 
   /**
