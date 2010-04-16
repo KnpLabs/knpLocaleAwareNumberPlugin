@@ -18,9 +18,9 @@ class knpWidgetLocaleAwareNumber extends sfWidgetFormInputText
    */
   protected function configure($options = array(), $attributes = array())
   {
-    $this->addRequiredOption('format');
-
     parent::configure($options, $attributes);
+
+    $this->addRequiredOption('format');
   }
   
   protected function convertToLocaleNumber($value)
