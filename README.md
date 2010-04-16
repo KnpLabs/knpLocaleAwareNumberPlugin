@@ -29,7 +29,7 @@ A typical use would be to pass this variable as a form option:
     
 ## knpWidgetLocaleAwareNumber
 
-## Usage
+### Usage
 
     $widget->render('knpLabs', '9.3') 
     // <input type="text" name="knpLabs" value="9,3" id="knpLabs" />
